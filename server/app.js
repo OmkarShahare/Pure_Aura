@@ -3,6 +3,7 @@ const mongoose=require('mongoose');
 const dotenv=require('dotenv');
 const cookieParser=require('cookie-parser');
 const app=express();
+const adminRoutes=require("./adminRoutes")
 
 dotenv.config({path:'./.env'});
 const cors=require('cors');
@@ -12,6 +13,8 @@ require('./db/conn');
 app.use(cors());  //enable cors for all routes
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(express.urlencoded({extended:true}));
 
 const PORT=process.env.PORT;
 
@@ -33,7 +36,7 @@ app.post('/register',async(req,res)=>{
 })
 
 
-
+app.use("/",adminRoutes)
 
 
 app.listen(PORT,()=>{
